@@ -1,21 +1,19 @@
-![Claude Code Action responding to a comment](https://github.com/user-attachments/assets/1d60c2e9-82ed-4ee5-b749-f9e021c85f4d)
+# Marty by Nesalia
 
-# Claude Code Action
-
-A general-purpose [Claude Code](https://claude.ai/code) action for GitHub PRs and issues that can answer questions and implement code changes. This action intelligently detects when to activate based on your workflow context—whether responding to @claude mentions, issue assignments, or executing automation tasks with explicit prompts. It supports multiple authentication methods including Anthropic direct API, Amazon Bedrock, Google Vertex AI, and Microsoft Foundry.
+A general-purpose AI-powered development assistant from Nesalia for GitHub PRs and issues that can answer questions and implement code changes. This action intelligently detects when to activate based on your workflow context—whether responding to @marty mentions, issue assignments, or executing automation tasks with explicit prompts. It supports multiple authentication methods including Anthropic direct API, Amazon Bedrock, Google Vertex AI, Microsoft Foundry, and Z.ai.
 
 ## Features
 
 - 🎯 **Intelligent Mode Detection**: Automatically selects the appropriate execution mode based on your workflow context—no configuration needed
-- 🤖 **Interactive Code Assistant**: Claude can answer questions about code, architecture, and programming
+- 🤖 **Interactive Code Assistant**: Marty can answer questions about code, architecture, and programming
 - 🔍 **Code Review**: Analyzes PR changes and suggests improvements
 - ✨ **Code Implementation**: Can implement simple fixes, refactoring, and even new features
 - 💬 **PR/Issue Integration**: Works seamlessly with GitHub comments and PR reviews
 - 🛠️ **Flexible Tool Access**: Access to GitHub APIs and file operations (additional tools can be enabled via configuration)
-- 📋 **Progress Tracking**: Visual progress indicators with checkboxes that dynamically update as Claude completes tasks
+- 📋 **Progress Tracking**: Visual progress indicators with checkboxes that dynamically update as Marty completes tasks
 - 📊 **Structured Outputs**: Get validated JSON results that automatically become GitHub Action outputs for complex automations
-- 🏃 **Runs on Your Infrastructure**: The action executes entirely on your own GitHub runner (Anthropic API calls go to your chosen provider)
-- ⚙️ **Simplified Configuration**: Unified `prompt` and `claude_args` inputs provide clean, powerful configuration aligned with Claude Code SDK
+- 🏃 **Runs on Your Infrastructure**: The action executes entirely on your own GitHub runner (API calls go to your chosen provider)
+- ⚙️ **Simplified Configuration**: Unified `prompt` and `claude_args` inputs provide clean, powerful configuration
 
 ## 📦 Upgrading from v0.x?
 
@@ -23,14 +21,17 @@ A general-purpose [Claude Code](https://claude.ai/code) action for GitHub PRs an
 
 ## Quickstart
 
-The easiest way to set up this action is through [Claude Code](https://claude.ai/code) in the terminal. Just open `claude` and run `/install-github-app`.
+To set up Marty, you'll need to:
 
-This command will guide you through setting up the GitHub app and required secrets.
+1. **Install the Marty GitHub App** on your repository (contact Nesalia for access)
+2. **Add your API key** as a repository secret:
+   - For Anthropic: `ANTHROPIC_API_KEY`
+   - For Z.ai: `ZAI_API_KEY`
 
 **Note**:
 
 - You must be a repository admin to install the GitHub app and add secrets
-- This quickstart method is only available for direct Anthropic API users. For AWS Bedrock, Google Vertex AI, or Microsoft Foundry setup, see [docs/cloud-providers.md](./docs/cloud-providers.md).
+- Marty supports multiple AI providers. See [docs/cloud-providers.md](./docs/cloud-providers.md) for AWS Bedrock, Google Vertex AI, Microsoft Foundry, or Z.ai setup.
 
 ## 📚 Solutions & Use Cases
 

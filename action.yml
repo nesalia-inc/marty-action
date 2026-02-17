@@ -1,28 +1,28 @@
-name: "Claude Code Action v1.0"
-description: "Flexible GitHub automation platform with Claude. Auto-detects mode based on event type: PR reviews, @claude mentions, or custom automation."
+name: "Marty by Nesalia"
+description: "AI-powered development assistant from Nesalia. Auto-detects mode: PR reviews, @marty mentions, or custom automation."
 branding:
-  icon: "at-sign"
-  color: "orange"
+  icon: "robot"
+  color: "purple"
 
 inputs:
   trigger_phrase:
     description: "The trigger phrase to look for in comments or issue body"
     required: false
-    default: "@claude"
+    default: "@marty"
   assignee_trigger:
-    description: "The assignee username that triggers the action (e.g. @claude)"
+    description: "The assignee username that triggers the action (e.g. @marty)"
     required: false
   label_trigger:
-    description: "The label that triggers the action (e.g. claude)"
+    description: "The label that triggers the action (e.g. marty)"
     required: false
-    default: "claude"
+    default: "marty"
   base_branch:
     description: "The branch to use as the base/source when creating new branches (defaults to repository default branch)"
     required: false
   branch_prefix:
-    description: "The prefix to use for Claude branches (defaults to 'claude/', use 'claude-' for dash format)"
+    description: "The prefix to use for Marty branches (defaults to 'marty/', use 'marty-' for dash format)"
     required: false
-    default: "claude/"
+    default: "marty/"
   branch_name_template:
     description: "Template for branch naming. Available variables: {{prefix}}, {{entityType}}, {{entityNumber}}, {{timestamp}}, {{sha}}, {{label}}, {{description}}. {{label}} will be first label from the issue/PR, or {{entityType}} as a fallback. {{description}} will be the first 5 words of the issue/PR title in kebab-case. Default: '{{prefix}}{{entityType}}-{{entityNumber}}-{{timestamp}}'"
     required: false
@@ -98,13 +98,13 @@ inputs:
     required: false
     default: ""
   bot_id:
-    description: "GitHub user ID to use for git operations (defaults to Claude's bot ID)"
+    description: "GitHub user ID to use for git operations (defaults to Marty's bot ID)"
     required: false
-    default: "41898282" # Claude's bot ID - see src/github/constants.ts
+    default: "2883066" # Marty's bot ID - Nesalia GitHub App
   bot_name:
-    description: "GitHub username to use for git operations (defaults to Claude's bot name)"
+    description: "GitHub username to use for git operations (defaults to Marty's bot name)"
     required: false
-    default: "claude[bot]"
+    default: "marty[bot]"
   track_progress:
     description: "Force tag mode with tracking comments for pull_request and issue events. Only applicable to pull_request (opened, synchronize, ready_for_review, reopened) and issue (opened, edited, labeled, assigned) events."
     required: false
