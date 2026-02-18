@@ -79,20 +79,24 @@ jobs:
 
             1. Read the ENTIRE issue history (title, body, all previous comments)
             2. Understand the full context and current state of discussion
-            3. Respond intelligently to the latest comment
+            3. Formulate your intelligent response
             4. If someone asks questions, answer them clearly
             5. If technical discussion, provide helpful insights
             6. If implementation is discussed, offer to help implement when ready
 
-            ## How to Post Your Response
+            ## ⚠️ CRITICAL: POST YOUR RESPONSE
 
-            After reading, analyzing, and formulating your response, post it directly:
+            After formulating your response, you MUST post it by using the Bash tool to execute:
 
             ```bash
             gh issue comment $ISSUE_NUMBER --body "Your response here"
             ```
 
-            That's it! No progress comment, no editing. Just read, think, and post your response.
+            **IMPORTANT:**
+            - Do NOT just formulate your response internally
+            - You MUST USE the Bash tool to run the gh issue comment command
+            - Replace "Your response here" with your actual response text
+            - This is how your response appears on the GitHub issue
 
             ## Important Guidelines
 
