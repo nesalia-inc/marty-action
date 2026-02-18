@@ -75,27 +75,6 @@ jobs:
 
             You are Marty, mentioned in an issue comment.
 
-            ## ⚡ PROGRESSION DISPLAY (Required)
-
-            CRITICAL: Show users that Marty is working while thinking!
-
-            Step 1: Post a progress comment IMMEDIATELY:
-            ```bash
-            gh issue comment $ISSUE_NUMBER --body "🤖 **Marty is analyzing your request...** ⏳"
-            ```
-
-            Capture the comment ID from the response (it will be in the JSON output).
-
-            Step 2: Read the ENTIRE issue history (title, body, all previous comments)
-            Step 3: Understand the full context and current state of discussion
-            Step 4: Formulate your intelligent response
-            Step 5: EDIT the progress comment with your actual response:
-            ```bash
-            gh issue edit comment $COMMENT_ID --body "Your final response here ✅"
-            ```
-
-            This way, users see Marty is working while you think, instead of wondering if anything is happening!
-
             ## Your Task
 
             1. Read the ENTIRE issue history (title, body, all previous comments)
@@ -105,6 +84,16 @@ jobs:
             5. If technical discussion, provide helpful insights
             6. If implementation is discussed, offer to help implement when ready
 
+            ## How to Post Your Response
+
+            After reading, analyzing, and formulating your response, post it directly:
+
+            ```bash
+            gh issue comment $ISSUE_NUMBER --body "Your response here"
+            ```
+
+            That's it! No progress comment, no editing. Just read, think, and post your response.
+
             ## Important Guidelines
 
             - Be concise but thorough
@@ -113,30 +102,8 @@ jobs:
             - Be friendly and professional
             - Don't mention that you're an AI (just be helpful)
 
-            ## How to Extract Comment ID
-
-            When posting a comment, `gh issue comment` returns JSON like:
-            ```json
-            {
-              "id": "1234567890",
-              "body": "🤖 **Marty is analyzing your request...** ⏳",
-              ...
-            }
-            ```
-
-            Extract the ID using:
-            ```bash
-            RESPONSE=$(gh issue comment $ISSUE_NUMBER --body "...")
-            COMMENT_ID=$(echo "$RESPONSE" | jq -r '.id')
-            ```
-
-            Then edit it later:
-            ```bash
-            gh issue edit comment $COMMENT_ID --body "New content"
-            ```
-
           claude_args: |
-            --allowedTools "Bash(gh:*),Bash(jq:*),Read"
+            --allowedTools "Bash(gh:*),Read"
             --max-turns 8
 
         env:
@@ -279,122 +246,24 @@ Even though responding doesn't modify code, `actions/checkout@v4` is required be
 
 ---
 
-## 🎨 Progress Display System
-
-### Why Progress Display Matters
-
-When someone mentions `@martyy-code`, they expect a quick response. However:
-- LLM generation can take 30 seconds to 2 minutes
-- Users might wonder if Marty is working
-- A progress indicator improves UX significantly
-
-### How It Works
-
-```
-User: "@martyy-code how does X work?"
-    ↓
-Workflow triggers
-    ↓
-Marty posts: "🤖 Marty is analyzing... ⏳"  (User sees this immediately!)
-    ↓
-Marty reads issue history (5-10s)
-    ↓
-Marty formulates response (20-60s)
-    ↓
-Marty edits comment with actual response ✅
-```
-
-### Visual Example
-
-**Initial comment (appears in 2-3 seconds):**
-> 🤖 **Marty is analyzing your request...** ⏳
-
-**After ~30-60 seconds (edited):**
-> Great question! Looking at the code... [full response] ✅
-
-### Technical Implementation
-
-The prompt instructs Marty to:
-
-1. **Post progress immediately**
-   ```bash
-   gh issue comment $NUMBER --body "🤖 **Marty is analyzing...** ⏳"
-   ```
-
-2. **Capture comment ID** from JSON response
-   ```bash
-   RESPONSE=$(gh issue comment $NUMBER --body "...")
-   COMMENT_ID=$(echo "$RESPONSE" | jq -r '.id')
-   ```
-
-3. **Edit with real response**
-   ```bash
-   gh issue edit comment $COMMENT_ID --body "Actual response ✅"
-   ```
-
-### Progress Message Variations
-
-You can customize the progress messages:
-
-```yaml
-prompt: |
-  Post a progress comment (choose based on what you're doing):
-  - "🤖 **Marty is reading the issue...** 📖"
-  - "🤖 **Marty is analyzing the code...** 🔍"
-  - "🤖 **Marty is thinking...** 🤔"
-  - "🤖 **Marty is formulating a response...** ✍️"
-```
-
-### Animated Progress (Optional)
-
-For a more dynamic feel, update the progress multiple times:
-
-```yaml
-prompt: |
-  Post initial progress: "🤖 **Marty is analyzing...** ⏳"
-
-  Then update while working:
-  - After reading: "🤖 **Marty has read the issue, now thinking...** 🤔"
-  - After analyzing: "🤖 **Marty is preparing the response...** ✍️"
-  - Final: Edit with actual response ✅
-```
-
-### Benefits
-
-| Benefit | Description |
-|---------|-------------|
-| **User confidence** | Users see Marty is working |
-| **Reduced duplicates** | Fewer "anyone here?" follow-ups |
-| **Better UX** | Clear communication of state |
-| **Professional** | Shows activity, not silence |
-
----
-
 ## 🔧 Required Tools Configuration
 
-### Why `Bash(gh:*)` and `Bash(jq:*)` are Required
+### Why `Bash(gh:*)` is Required
 
-The progress display system requires Marty to:
-
-1. **Post comments** using `gh issue comment`
-2. **Capture IDs** using `jq` to parse JSON responses
-3. **Edit comments** using `gh issue edit`
-
-Without these tools, Marty cannot:
-- Post the progress indicator
-- Extract the comment ID for editing
-- Update the comment with the final response
+Marty needs to:
+1. **Read comments** using `gh issue view`
+2. **Post responses** using `gh issue comment`
+3. **Read code files** using `Read` tool
 
 ### Allowed Tools Breakdown
 
 ```yaml
---allowedTools "Bash(gh:*),Bash(jq:*),Read"
+--allowedTools "Bash(gh:*),Read"
 ```
 
 | Tool | Purpose | Example Commands |
 |------|---------|------------------|
-| `Bash(gh:*)` | GitHub CLI operations | `gh issue comment`, `gh issue edit`, `gh issue view` |
-| `Bash(jq:*)` | JSON parsing | `jq -r '.id'`, `jq -r '.body'` |
+| `Bash(gh:*)` | GitHub CLI operations | `gh issue comment`, `gh issue view` |
 | `Read` | Read repository files | Understanding code context |
 
 ### Security Considerations
@@ -404,7 +273,28 @@ Without these tools, Marty cannot:
 - ✅ Add/remove labels
 - ✅ Edit issues
 - ❌ Cannot modify code (no `Write` tool)
-- ❌ Cannot run arbitrary bash commands (only `gh` and `jq`)
+- ❌ Cannot run arbitrary bash commands (only `gh`)
+
+**For maximum simplicity (recommended):**
+```yaml
+--allowedTools "Bash(gh:*),Read"
+```
+
+This allows posting comments while keeping security tight.
+
+---
+
+## Advanced Configuration
+| `Read` | Read repository files | Understanding code context |
+
+### Security Considerations
+
+**With `Bash(gh:*)`, Marty can:**
+- ✅ Post, edit, delete comments
+- ✅ Add/remove labels
+- ✅ Edit issues
+- ❌ Cannot modify code (no `Write` tool)
+- ❌ Cannot run arbitrary bash commands (only `gh`)
 
 **If you need even more permissive:**
 
